@@ -1,34 +1,34 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, Req, Res } from "@nestjs/common";
-import { Request } from "express";
+import { ProductsService } from "./products.service";
+
 
 @Controller('products')
 export class ProductsController {
 
+    constructor(private readonly productsService: ProductsService) {}
+
     @Get()
-    getAllProducts(@Req() request: Request, @Res() response): any {
-        console.log(request.headers)
-        response.status(200).send('This endpoint returns a list of all products')
+    getAllProducts() {
+        return this.productsService.getAllProducts();
     }
 
     @Get(':id')
-    getProduct(@Param() params) {
-        console.log(params.id);
-        return `This action returns the product details for product id #${params.id}`;
+    getProduct(@Param('id') id: number) {
+        return this.productsService.getProduct(id);
     }
 
     @Post()
-    createProduct(@Body() productData: any): string {
-        console.log(productData);
-        return 'This endpoint creates a new product';
+    createProduct(@Body() productData) {
+        return this.productsService.createProduct(productData)
     }
 
-    @Put()
-    updateProduct(): string {
-        return 'This endpoint updates an existing product';
+    @Put(':id')
+    updateProduct(@Param('id') id: number, @Body() productData) {
+        return this.productsService.updateProduct(id, productData);
     }
 
-    @Delete()
-    deleteProduct(): string {
-        return 'This endpoint deletes an existing product';
+    @Delete(':id')
+    deleteProduct(@Param('id') id: number) {
+        return this.productsService.deleteProduct(id);
     }
 }
