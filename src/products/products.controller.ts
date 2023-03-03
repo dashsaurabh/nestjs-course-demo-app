@@ -1,8 +1,10 @@
 import { Body, Controller, Delete, ForbiddenException, Get, HttpException, HttpStatus, Param, Post, Put, Req, Res, UseFilters } from "@nestjs/common";
+import { ApiTags } from "@nestjs/swagger";
 import { CustomExceptionFilter } from "src/exceptions/custom-exception.filter";
 import { ProductsService } from "./products.service";
 
 @Controller('products')
+@ApiTags('products')
 export class ProductsController {
 
     constructor(private readonly productsService: ProductsService) {}
