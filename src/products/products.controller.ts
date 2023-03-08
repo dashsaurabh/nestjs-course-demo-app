@@ -1,10 +1,12 @@
-import { Body, Controller, Delete, ForbiddenException, Get, HttpException, HttpStatus, Param, Post, Put, Req, Res, UseFilters } from "@nestjs/common";
+import { Body, Controller, Delete, ForbiddenException, Get, HttpException, HttpStatus, Param, Post, Put, Req, Res, UseFilters, UseInterceptors } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
 import { CustomExceptionFilter } from "src/exceptions/custom-exception.filter";
+import { LoggingInterceptor } from "src/interceptors/logging.interceptor";
 import { ProductsService } from "./products.service";
 
 @Controller('products')
 @ApiTags('products')
+@UseInterceptors(LoggingInterceptor)
 export class ProductsController {
 
     constructor(private readonly productsService: ProductsService) {}
